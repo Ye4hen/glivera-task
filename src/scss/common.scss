@@ -1,0 +1,9 @@
+// Заголовки, загальні БЕМ блоки та інше...
+
+.page{
+	display: grid;
+	@media (min-width:$tablet){
+		grid-template-columns: toRem(306) 1fr;
+	}
+	grid-template-columns: auto;
+}

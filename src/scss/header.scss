@@ -1,0 +1,305 @@
+//====================================================================================================
+
+.aside {
+	background-color: $menuBgColor;
+	@media (max-width:$tablet) {
+		position: fixed;
+		top: 0;
+		height: 100%;
+		left: toRem(-320);
+		width: toRem(400);
+		transition: left 0.3s;
+		z-index: 50;
+		.menu-open & {
+			overflow: auto;
+			left: 0;
+		}
+	}
+	@media (max-width:$mobileSmall){
+		width: toRem(250);
+		left: toRem(-175);
+	}
+	&__wrapper {
+		
+	}
+	
+	&__menu {
+		@include adaptiveValue("padding-top", 36, 20);
+		@include adaptiveValue("padding-right", 28, 15);
+		@include adaptiveValue("padding-left", 28, 15);
+		@include adaptiveValue("padding-bottom", 76, 50);
+		display: grid;
+		grid-template-rows: minmax(toRem(39), 8%) 1fr minmax(toRem(42), 3.5%);
+		@include adaptiveValue("gap", 53, 25);
+		// justify-items: start;
+		min-height: 100vh;
+	}
+}
+
+.menu {
+	&__header {
+		// @include adaptiveValue("padding-bottom", 53, 25);
+		display: flex;
+		align-items: center;
+		// @include adaptiveValue("gap", 28, 20);
+		gap: toRem(25);
+		justify-content: space-between;
+		@media (max-width:$mobileSmall){
+			justify-content: start;
+		}
+	}
+	
+	&__logo {
+		display: flex;
+		align-items: end;
+		gap: toRem(4);
+		svg{
+			width: toRem(195);
+		}
+		span{
+			font-size: toRem(10);
+			color: #838383;
+			margin-bottom: toRem(5);
+		}
+		@media (max-width:$tablet){
+			width: toRem(250);
+		}
+		@media (max-width:$mobileSmall){
+			width: toRem(150);
+			span{
+				margin-bottom: toRem(8);
+			}
+		}
+	}
+
+	&__icon {}
+
+	&__body {
+		width: 100%;
+	}
+
+	&__list {
+		&:not(:last-child){
+			margin-bottom: toRem(15);
+		}
+		@media (max-width:$mobileSmall){
+			padding-right: toRem(50);
+		}
+	}
+
+	&__item {
+		&:not(:last-child){
+			margin-bottom: toRem(18);
+		}
+		opacity: 0;
+		transform: translate(0, -10%);
+		transition: opacity 0.5s, transform 0.5s;
+		._watcher-view & {
+			opacity: 1;
+			transform: translate(0, 0);
+
+			@for $i from 1 through 6 {
+				&:nth-child(#{$i}) {
+					$delay: $i * 0.15 + 0.5;
+					transition-delay:#{$delay}s;
+				}
+			}
+		}
+		.simple-svg{
+			g{
+				path{
+					stroke: $secondaryGreyColor;
+					transition: stroke 0.3s;
+				}
+			}
+		}
+		#medium-svg-v-1,
+		#medium-svg-v-3{
+			fill: $secondaryGreyColor;
+			transition: fill 0.3s;
+		}
+		#medium-svg-v-2{
+			stroke: $secondaryGreyColor;
+			transition: stroke 0.3s;
+		}
+		.hard-svg{
+			rect{
+				fill: $menuBgColor;
+				transition: fill 0.3s;
+			}
+			g{
+				path{
+					fill: $secondaryGreyColor;
+					transition: fill 0.3s;
+				}
+			}
+		}
+		@media(any-hover:hover){
+			&:hover{
+				.menu__link{
+					color: $menuBgColor;
+					background-color: $purpleColor;
+				}
+				.menu__arrow {
+					g{
+						path{
+							stroke: $menuBgColor;
+						}
+					}
+				}
+				.simple-svg{
+					g{
+						path{
+							stroke: $menuBgColor;
+						}
+					}
+				}
+				#medium-svg-v-1,
+				#medium-svg-v-3 {
+					fill: $menuBgColor;
+				}
+		
+				#medium-svg-v-2 {
+					stroke: $menuBgColor;
+				}
+				.hard-svg{
+					rect{
+						fill: $secondaryGreyColor;
+					}
+					g{
+						path{
+							fill: $menuBgColor;
+						}
+					}
+				}
+			}
+		}
+		@media (max-width:$tablet){
+			width: toRem(250);
+		}
+		@media (max-width:$mobileSmall){
+			width: 100%;
+		}
+	}
+
+	&__link {
+		padding: toRem(11) toRem(8) toRem(11) toRem(11);
+		display: grid;
+		grid-template-columns: toRem(24) 1fr toRem(16);
+		column-gap: toRem(14);
+		align-items: center;
+		color: $secondaryGreyColor;
+		transition: all 0.3s;
+		border-radius: toRem(8);
+	}
+
+	&__arrow{
+		height: toRem(16);
+		width: toRem(16);
+		justify-self: end;
+		g {
+			path{
+				stroke: $secondaryGreyColor;
+				transition: stroke 0.3s;
+			}
+		}
+	}
+
+	&__footer {
+		display: grid;
+		align-self: end;
+		transform: translate(-50%, 0%);
+		transition: opacity 1s, transform 1s;
+		opacity: 0;
+	
+		._watcher-view & {
+			opacity: 1;
+			transform: translate(0, 0);
+		}
+	}
+
+	&__profile {
+		justify-self: start;
+	}
+}
+
+.profile-menu {
+	display:flex;
+	align-items: center;
+	flex-direction: row-reverse;
+	@include adaptiveValue("gap", 12, 8);
+	flex-wrap: wrap;
+
+	&__info {}
+
+	&__name {
+		&:not(:last-child){
+			margin-bottom: toRem(3);
+		}
+	}
+
+	&__position {
+		color: #757575;
+		font-size: toRem(12);
+		font-weight: 400;
+	}
+
+	&__avatar {
+		img{
+			border-radius: 50%;
+		}
+	}
+}
+
+//====================================================================================================
+
+//Burger
+.icon-menu {
+	display: none;
+	@media (max-width: $tablet) {
+		display: block;
+		position: relative;
+		width: toRem(30);
+		height: toRem(18);
+		z-index: 5;
+		@media (any-hover: none) {
+			cursor: default;
+		}
+		span,
+		&::before,
+		&::after {
+			content: "";
+			transition: all 0.3s ease 0s;
+			right: 0;
+			position: absolute;
+			width: 100%;
+			height: toRem(2);
+			background-color: #000;
+		}
+		&::before {
+			top: 0;
+		}
+		&::after {
+			bottom: 0;
+		}
+		span {
+			top: calc(50% - toRem(1));
+		}
+		.menu-open & {
+			span {
+				width: 0;
+			}
+			&::before,
+			&::after {
+			}
+			&::before {
+				top: calc(50% - toRem(1));
+				transform: rotate(-45deg);
+			}
+			&::after {
+				bottom: calc(50% - toRem(1));
+				transform: rotate(45deg);
+			}
+		}
+	}
+}
