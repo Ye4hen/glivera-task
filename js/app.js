@@ -1,6 +1,6 @@
 (() => {
     "use strict";
-    const modules_flsModules = {};
+    const flsModules = {};
     function isWebp() {
         function testWebP(callback) {
             let webP = new Image;
@@ -58,14 +58,14 @@
             if (bodyLockStatus && e.target.closest(".icon-menu")) {
                 bodyLockToggle();
                 document.documentElement.classList.toggle("menu-open");
-            } else if (document.documentElement.classList.contains("menu-open") && !e.target.closest(".aside")) functions_menuClose();
+            } else if (document.documentElement.classList.contains("menu-open") && !e.target.closest(".aside")) menuClose();
         }));
     }
-    function functions_menuClose() {
+    function menuClose() {
         bodyUnlock();
         document.documentElement.classList.remove("menu-open");
     }
-    function functions_FLS(message) {
+    function FLS(message) {
         setTimeout((() => {
             if (window.FLS) console.log(message);
         }), 0);
@@ -82,9 +82,7 @@
             };
             this.config = Object.assign(defaultConfig, props);
             this.observer;
-            setTimeout((() => {
-                !document.documentElement.classList.contains("watcher") ? this.scrollWatcherRun() : null;
-            }), 1e3);
+            !document.documentElement.classList.contains("watcher") ? this.scrollWatcherRun() : null;
         }
         scrollWatcherUpdate() {
             this.scrollWatcherRun();
@@ -157,7 +155,7 @@
             this.scrollWatcherLogging(`Я перестав стежити за ${targetElement.classList}`);
         }
         scrollWatcherLogging(message) {
-            this.config.logging ? functions_FLS(`[Спостерігач]: ${message}`) : null;
+            this.config.logging ? FLS(`[Спостерігач]: ${message}`) : null;
         }
         scrollWatcherCallback(entry, observer) {
             const targetElement = entry.target;
@@ -170,7 +168,7 @@
             }));
         }
     }
-    modules_flsModules.watcher = new ScrollWatcher({});
+    flsModules.watcher = new ScrollWatcher({});
     class Parallax {
         constructor(elements) {
             if (elements.length) this.elements = Array.from(elements).map((el => new Parallax.Each(el, this.options)));
@@ -240,16 +238,7 @@
             if (parameters.axis == "v") el.style.transform = `translate3D(0, ${(parameters.direction * (this.value / parameters.coefficient)).toFixed(2)}px,0) ${parameters.additionalProperties}`; else if (parameters.axis == "h") el.style.transform = `translate3D(${(parameters.direction * (this.value / parameters.coefficient)).toFixed(2)}px,0,0) ${parameters.additionalProperties}`;
         }
     };
-    if (document.querySelectorAll("[data-prlx-parent]")) modules_flsModules.parallax = new Parallax(document.querySelectorAll("[data-prlx-parent]"));
-    let addWindowScrollEvent = false;
-    setTimeout((() => {
-        if (addWindowScrollEvent) {
-            let windowScroll = new Event("windowScroll");
-            window.addEventListener("scroll", (function(e) {
-                document.dispatchEvent(windowScroll);
-            }));
-        }
-    }), 0);
+    if (document.querySelectorAll("[data-prlx-parent]")) flsModules.parallax = new Parallax(document.querySelectorAll("[data-prlx-parent]"));
     window["FLS"] = true;
     isWebp();
     menuInit();
