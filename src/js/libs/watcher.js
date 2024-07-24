@@ -17,9 +17,9 @@ class ScrollWatcher {
 		}
 		this.config = Object.assign(defaultConfig, props);
 		this.observer;
-		setTimeout(() => {
+		// setTimeout(() => {
 			!document.documentElement.classList.contains('watcher') ? this.scrollWatcherRun() : null;
-		}, 1000)
+		// }, 1000)
 	}
 	// Оновлюємо конструктор
 	scrollWatcherUpdate() {
